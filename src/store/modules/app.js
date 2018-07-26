@@ -16,7 +16,7 @@ const app = {
     }
   },
   actions: {
-    ToggleSideBar: ({ commit }) => {
+    toggleSideBar: ({ commit }) => {
       commit('TOGGLE_SIDEBAR');
     }
   }

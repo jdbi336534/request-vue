@@ -5,12 +5,14 @@ import App from './App';
 import store from './store';
 import router from './router';
 import ElementUI from 'element-ui';
-import 'normalize.css/normalize.css'; // A modern alternative to CSS resets
+import utils from '@/util/';
+import 'reset-css/reset.css';
 import 'element-ui/lib/theme-chalk/index.css';
+import '@/styles/index.scss';
 import './permission.js';
 
 Vue.use(ElementUI);
-
+Vue.use(utils);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

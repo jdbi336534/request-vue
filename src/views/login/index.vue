@@ -1,219 +1,230 @@
+<!-- 登录页面 -->
 <template>
-    <div class="login-container">
-        <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-            <div class="title-container">
-                <h3 class="title">系统登录</h3>
+    <div class="login">
+        <div class="top"></div>
+        <div class="login-box">
+            <div class="left">
+                <img src="../../assets/login/111.png"
+                     alt="">
             </div>
-            <el-form-item prop="username">
-                <span class="svg-container svg-container_login">
-                    <!-- <svg-icon icon-class="user" /> -->
-                </span>
-                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
-            </el-form-item>
-
-            <el-form-item prop="password">
-                <span class="svg-container">
-                    <!-- <svg-icon icon-class="password" /> -->
-                </span>
-                <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="password" />
-                <span class="show-pwd" @click="showPwd">
-                    <!-- <svg-icon icon-class="eye" /> -->
-                </span>
-            </el-form-item>
-
-            <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
-
-        </el-form>
-
+            <div class="right">
+                <div class="form">
+                    <h1 class="title">数据统一调度平台 </h1>
+                    <el-alert style="width:380px;margin:0 auto;"
+                              v-if="msg!=''"
+                              :title="msg"
+                              type="error"
+                              show-icon
+                              :closable="false">
+                    </el-alert>
+                    <div class="form_item">
+                        <label>
+                            <i class="user-icon"></i>
+                            <input class="username"
+                                   type="text"
+                                   placeholder="请输入用户名"
+                                   v-model="username"></label>
+                    </div>
+                    <div class="form_item">
+                        <label>
+                            <i class="password-icon"></i>
+                            <input type="password"
+                                   placeholder="请输入密码"
+                                   v-model="password"></label>
+                    </div>
+                    <div class="form_item">
+                        <button type="submit"
+                                :disabled="loading"
+                                :class="{'is-loading':loading}"
+                                @click="handleSubmit">
+                            <i class="fa fa-spinner fa-pulse fa-fw"
+                               v-show="loading"></i>
+                            <span>登</span>
+                            <span>录</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom"></div>
     </div>
 </template>
-
 <script>
-import { isvalidUsername } from '@/util/validate';
-
+import { login } from '@/service/common.js';
 export default {
-    name: 'login',
+    components: {},
+    name: '',
     data() {
-        const validateUsername = (rule, value, callback) => {
-            if (!isvalidUsername(value)) {
-                callback(new Error('Please enter the correct user name'));
-            } else {
-                callback();
-            }
-        };
-        const validatePassword = (rule, value, callback) => {
-            if (value.length < 6) {
-                callback(
-                    new Error('The password can not be less than 6 digits')
-                );
-            } else {
-                callback();
-            }
-        };
         return {
-            loginForm: {
-                username: 'admin',
-                password: '1111111'
-            },
-            loginRules: {
-                username: [
-                    {
-                        required: true,
-                        trigger: 'blur',
-                        validator: validateUsername
-                    }
-                ],
-                password: [
-                    {
-                        required: true,
-                        trigger: 'blur',
-                        validator: validatePassword
-                    }
-                ]
-            },
-            passwordType: 'password',
-            loading: false,
-            showDialog: false
+            msg: '',
+            username: '',
+            password: '',
+            loading: false
         };
     },
+    computed: {},
+    created() { },
+    mounted() { },
     methods: {
-        showPwd() {
-            if (this.passwordType === 'password') {
-                this.passwordType = '';
-            } else {
-                this.passwordType = 'password';
+        async handleSubmit() {
+            let res = await login(this.username, this.password);
+            if (res) {
+                console.log(res);
             }
-        },
-        handleLogin() {
-            this.$refs.loginForm.validate(valid => {
-                if (valid) {
-                    this.loading = true;
-                    this.$store
-                        .dispatch('LoginByUsername', this.loginForm)
-                        .then(() => {
-                            this.loading = false;
-                            this.$router.push({ path: '/' });
-                        })
-                        .catch(() => {
-                            this.loading = false;
-                        });
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
-            });
+            // this.loading = !this.loading;
         }
-    },
-    created() {
-       
-    },
-    destroyed() {
-        
     }
 };
 </script>
+<style lang='scss' scoped>
+.login {
+  width: 100%;
+  height: 100%;
+  background: url(../../assets/login/background.png) no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
 
-<style rel="stylesheet/scss" lang="scss">
-$bg: #2d3a4b;
-$light_gray: #eee;
-
-/* reset element-ui css */
-.login-container {
-    .el-input {
-        display: inline-block;
-        height: 47px;
-        width: 85%;
-        input {
-            background: transparent;
-            border: 0px;
-            -webkit-appearance: none;
-            border-radius: 0px;
-            padding: 12px 5px 12px 15px;
-            color: $light_gray;
-            height: 47px;
-            &:-webkit-autofill {
-                -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
-                -webkit-text-fill-color: #fff !important;
-            }
-        }
+  .top {
+    height: 23.7%;
+  }
+  .bottom {
+    height: 13.9%;
+  }
+  .login-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-bottom: 90px;
+    width: 90%;
+    min-width: 1280px;
+    margin: 0 auto;
+    overflow: hidden;
+    .left {
+      box-sizing: border-box;
+      float: left;
+      width: 52%;
+      height: 380px;
+      img {
+        float: right;
+      }
     }
-    .el-form-item {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        color: #454545;
-    }
-}
-</style>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-$bg: #2d3a4b;
-$dark_gray: #889aa4;
-$light_gray: #eee;
-
-.login-container {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: $bg;
-    .login-form {
-        position: absolute;
-        left: 0;
-        right: 0;
-        width: 520px;
-        padding: 35px 35px 15px 35px;
-        margin: 120px auto;
-    }
-    .tips {
-        font-size: 14px;
-        color: #fff;
-        margin-bottom: 10px;
-        span {
-            &:first-of-type {
-                margin-right: 16px;
-            }
-        }
-    }
-    .svg-container {
-        padding: 6px 5px 6px 15px;
-        color: $dark_gray;
-        vertical-align: middle;
-        width: 30px;
-        display: inline-block;
-        &_login {
-            font-size: 20px;
-        }
-    }
-    .title-container {
-        position: relative;
+    .right {
+      box-sizing: border-box;
+      float: left;
+      width: 48%;
+      padding-left: 64px;
+      .form {
+        width: 500px;
+        padding-bottom: 40px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        border: 1px solid rgba(66, 164, 245, 0.09);
+        box-shadow: 5px 10px 20px rgba(66, 164, 245, 0.2);
         .title {
-            font-size: 26px;
-            font-weight: 400;
-            color: $light_gray;
-            margin: 0px auto 40px auto;
-            text-align: center;
-            font-weight: bold;
+          text-align: center;
+          font-family: Impact;
+          font-size: 24px;
+          color: #3b77db;
+          letter-spacing: 7.2px;
+          padding: 40px 0 20px 0;
         }
-        .set-language {
-            color: #fff;
-            position: absolute;
-            top: 5px;
-            right: 0px;
+        .form_item {
+          width: 248px;
+          margin: 0 auto;
+          margin-top: 30px;
+          button {
+            margin-top: 20px;
+            display: inline-block;
+            line-height: 1;
+            white-space: nowrap;
+            cursor: pointer;
+            background: #fff;
+            border: 0px;
+            border-color: #dcdfe6;
+            color: #606266;
+            -webkit-appearance: none;
+            box-sizing: border-box;
+            outline: none;
+            width: 240px;
+            height: 32px;
+            background: url(../../assets/login/btn.png) no-repeat;
+            font-size: 12px;
+            color: #ffffff;
+            &.is-loading {
+              position: relative;
+              pointer-events: none;
+              &:before {
+                pointer-events: none;
+                content: '';
+                position: absolute;
+                left: -1px;
+                top: -1px;
+                right: -1px;
+                bottom: -1px;
+                border-radius: inherit;
+                background-color: hsla(0, 0%, 100%, 0.35);
+              }
+            }
+            span {
+              font-size: 12px;
+              color: #ffffff;
+              text-align: center;
+            }
+            span + span {
+              margin-left: 60px;
+            }
+          }
+          input::-webkit-input-placeholder {
+            /* WebKit, Blink, Edge */
+            font-size: 14px;
+            color: #9b9b9b;
+          }
+          input:-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            font-size: 14px;
+            color: #9b9b9b;
+          }
+          input::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            font-size: 14px;
+            color: #9b9b9b;
+          }
+          input::-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            font-size: 14px;
+            color: #9b9b9b;
+          }
+          input[type='text'],
+          input[type='password'] {
+            font-size: 14px;
+            color: #4a4a4a;
+            height: 22px;
+            width: 198px;
+            margin-left: 20px;
+            border: none;
+            border-bottom: 1px solid #d4d4d4;
+            outline: none;
+            background: transparent;
+          }
+          .user-icon {
+            width: 16px;
+            height: 18px;
+            vertical-align: middle;
+            display: inline-block;
+            background: url(../../assets/login/user.png) no-repeat;
+          }
+          .password-icon {
+            width: 16px;
+            height: 18px;
+            vertical-align: middle;
+            display: inline-block;
+            background: url(../../assets/login/lock.png) no-repeat;
+          }
         }
+      }
     }
-    .show-pwd {
-        position: absolute;
-        right: 10px;
-        top: 7px;
-        font-size: 16px;
-        color: $dark_gray;
-        cursor: pointer;
-        user-select: none;
-    }
-    .thirdparty-button {
-        position: absolute;
-        right: 35px;
-        bottom: 28px;
-    }
+  }
 }
 </style>

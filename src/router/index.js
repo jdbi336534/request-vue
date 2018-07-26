@@ -13,19 +13,20 @@ import testthreea from '@/views/testpage/test3';
 
 Vue.use(Router);
 export const constantRouterMap = [
-  { path: '/login', name: 'login', component: login },
-  { path: '/404', name: '404', component: err404 },
-  { path: '/403', name: '403', component: err403 },
-  { path: '/500', name: '500', component: err500 },
+  { path: '/login', component: login },
+  { path: '/404', component: err404 },
+  { path: '/403', component: err403 },
+  { path: '/500', component: err500 },
   {
-    path: '/',
+    path: '',
     component: Layout,
-    redirect: '/dashboard',
-    name: 'Dashboard',
+    redirect: 'dashboard',
     children: [
       {
         path: 'dashboard',
-        component: dashBoard
+        name: 'dashboard',
+        component: dashBoard,
+        meta: { title: '首页' },
       }
     ]
   }
@@ -41,24 +42,20 @@ export const asyncRouterMap = [
     path: '/example',
     component: Layout,
     redirect: '/example/testone',
-    name: 'merry',
     meta: { title: '例子', icon: 'example' },
     children: [
       {
         path: 'testone',
-        // name: 'pageone',
         component: testonea,
         meta: { title: '测试页面1' }
       },
       {
         path: 'testtwo',
-        // name: 'pagetwo',
         component: testtwoa,
         meta: { title: '测试页面2' }
       },
       {
         path: 'testthree',
-        // name: 'pahethree',
         component: testthreea,
         meta: { title: '测试页面3' }
       }
