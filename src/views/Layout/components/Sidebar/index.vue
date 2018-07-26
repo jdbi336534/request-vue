@@ -21,11 +21,14 @@ export default {
   },
   name: '',
   data() {
-    return {}
+    return {
+
+    }
   },
   computed: {
     ...mapGetters(['permission_routers', 'sidebar']),
     isCollapse() {
+      console.log(!this.sidebar.opened)
       return !this.sidebar.opened
     }
   },

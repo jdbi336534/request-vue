@@ -9,7 +9,7 @@ import utils from '@/util/';
 import 'reset-css/reset.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/styles/index.scss';
-import './permission.js';
+// import './permission.js';
 
 Vue.use(ElementUI);
 Vue.use(utils);

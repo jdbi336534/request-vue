@@ -2,7 +2,7 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
-  <breadcrumb class="breadcrumb-container"></breadcrumb>
+    <breadcrumb class="breadcrumb-container"></breadcrumb>
   </el-menu>
 </template>
 <script>

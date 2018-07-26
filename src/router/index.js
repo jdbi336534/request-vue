@@ -12,53 +12,111 @@ import testtwoa from '@/views/testpage/test2';
 import testthreea from '@/views/testpage/test3';
 
 Vue.use(Router);
-export const constantRouterMap = [
-  { path: '/login', component: login },
-  { path: '/404', component: err404 },
-  { path: '/403', component: err403 },
-  { path: '/500', component: err500 },
+export const constantRouterMap = [{
+    path: '/login',
+    component: login
+  },
+  {
+    path: '/404',
+    component: err404
+  },
+  {
+    path: '/403',
+    component: err403
+  },
+  {
+    path: '/500',
+    component: err500
+  },
   {
     path: '',
     component: Layout,
     redirect: 'dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        name: 'dashboard',
-        component: dashBoard,
-        meta: { title: '首页' },
-      }
-    ]
-  }
-];
-
-export default new Router({
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
-});
-
-export const asyncRouterMap = [
+    children: [{
+      path: 'dashboard',
+      name: 'dashboard',
+      component: dashBoard,
+      meta: {
+        title: '首页'
+      },
+    }]
+  },
   {
     path: '/example',
+    name: 'example',
     component: Layout,
     redirect: '/example/testone',
-    meta: { title: '例子', icon: 'example' },
-    children: [
-      {
+    meta: {
+      title: '例子',
+      icon: 'example'
+    },
+    children: [{
         path: 'testone',
+        name: 'dcp-testone',
         component: testonea,
-        meta: { title: '测试页面1' }
+        meta: {
+          title: '测试页面1'
+        }
       },
       {
         path: 'testtwo',
+        name: 'dcp-testtwo',
         component: testtwoa,
-        meta: { title: '测试页面2' }
+        meta: {
+          title: '测试页面2'
+        }
       },
       {
         path: 'testthree',
+        name: 'dcp-testthree',
         component: testthreea,
-        meta: { title: '测试页面3' }
+        meta: {
+          title: '测试页面3'
+        }
       }
     ]
   }
 ];
+
+export const asyncRouterMap = [{
+  path: '/example',
+  name: 'example',
+  component: Layout,
+  redirect: '/example/testone',
+  meta: {
+    title: '例子',
+    icon: 'example'
+  },
+  children: [{
+      path: 'testone',
+      name: 'dcp-testone',
+      component: testonea,
+      meta: {
+        title: '测试页面1'
+      }
+    },
+    {
+      path: 'testtwo',
+      name: 'dcp-testtwo',
+      component: testtwoa,
+      meta: {
+        title: '测试页面2'
+      }
+    },
+    {
+      path: 'testthree',
+      name: 'dcp-testthree',
+      component: testthreea,
+      meta: {
+        title: '测试页面3'
+      }
+    }
+  ]
+}];
+
+export default new Router({
+  scrollBehavior: () => ({
+    y: 0
+  }),
+  routes: constantRouterMap
+});
