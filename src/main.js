@@ -8,6 +8,7 @@ import ElementUI from 'element-ui';
 import utils from '@/util/';
 import 'reset-css/reset.css';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'font-awesome/css/font-awesome.min.css';
 import '@/styles/index.scss';
 // import './permission.js';
 

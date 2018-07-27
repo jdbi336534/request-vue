@@ -1,6 +1,6 @@
 # vue-project
 
-> 一个vue项目，针对request请求做了处理 [参考](https://github.com/PanJiaChen/vue-element-admin)
+> 一个vue项目，针对request请求做了处理 [参考’](https://github.com/PanJiaChen/vue-element-admin)
 
 ## Build Setup
 
