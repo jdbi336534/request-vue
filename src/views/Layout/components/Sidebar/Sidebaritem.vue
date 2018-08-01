@@ -6,7 +6,7 @@
                      :to="resolvePath(onlyOneChild.path)">
             <el-menu-item :index="resolvePath(onlyOneChild.path)"
                           :class="{'submenu-title-noDropdown':!isNest}">
-                 <i class="el-icon-location"></i>
+                 <i v-if="onlyOneChild.meta&&onlyOneChild.meta.icon" class="fa" :class="onlyOneChild.meta.icon" aria-hidden="true"></i>
                 <span v-if="onlyOneChild.meta&&onlyOneChild.meta.title"
                       slot="title">{{onlyOneChild.meta.title}}</span>
             </el-menu-item>
@@ -15,7 +15,7 @@
         <el-submenu v-else
                     :index="item.name||item.path">
             <template slot="title">
-                <i class="el-icon-location"></i>
+                <i v-if="item.meta&&item.meta.icon" class="fa" :class="item.meta.icon" aria-hidden="true"></i>
                 <span v-if="item.meta&&item.meta.title"
                       slot="title">{{item.meta.title}}</span>
             </template>
@@ -33,7 +33,7 @@
                              :to="resolvePath(child.path)"
                              :key="child.name">
                     <el-menu-item :index="resolvePath(child.path)">
-                        <i class="el-icon-location"></i>
+                        <i v-if="child.meta&&child.meta.icon" class="fa" :class="child.meta.icon" aria-hidden="true"></i>
                         <span v-if="child.meta&&child.meta.title"
                               slot="title">{{child.meta.title}}</span>
                     </el-menu-item>

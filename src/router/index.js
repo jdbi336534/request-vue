@@ -37,7 +37,8 @@ export const constantRouterMap = [{
       name: 'dashboard',
       component: dashBoard,
       meta: {
-        title: '首页'
+        title: '首页',
+        icon: 'fa-tachometer'
       },
     }]
   },
@@ -47,15 +48,15 @@ export const constantRouterMap = [{
     component: Layout,
     redirect: '/example/testone',
     meta: {
-      title: '例子',
-      icon: 'example'
+      title: '系统管理平台',
+      icon: 'fa-assistive-listening-systems'
     },
     children: [{
         path: 'testone',
         name: 'dcp-testone',
         component: testonea,
         meta: {
-          title: '测试页面1'
+          title: '用户管理'
         }
       },
       {
@@ -63,7 +64,7 @@ export const constantRouterMap = [{
         name: 'dcp-testtwo',
         component: testtwoa,
         meta: {
-          title: '测试页面2'
+          title: '角色管理'
         }
       },
       {
@@ -71,7 +72,23 @@ export const constantRouterMap = [{
         name: 'dcp-testthree',
         component: testthreea,
         meta: {
-          title: '测试页面3'
+          title: '菜单管理'
+        }
+      },
+      {
+        path: 'testfour',
+        name: 'dcp-testfour',
+        component: testtwoa,
+        meta: {
+          title: '注册中心'
+        }
+      },
+      {
+        path: 'testfive',
+        name: 'dcp-testfive',
+        component: testthreea,
+        meta: {
+          title: '配置中心'
         }
       }
     ]

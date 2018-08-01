@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Cookies from 'js-cookie';
+import CryptoJS from 'crypto-js';
 const utils = {
   /**
    * 格式化时间
@@ -105,6 +106,46 @@ const utils = {
     if (!key) return;
     window.sessionStorage.removeItem(key);
   },
+  /**
+   * CryptoJS加密
+   */
+  getAES(data) { //加密
+    let key = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'; //密钥
+    let iv = '1234567812345678';
+    let encrypted = getAesString(data, key, iv); //密文
+    let encrypted1 = CryptoJS.enc.Utf8.parse(encrypted);
+    return encrypted1;
+  },
+  /**
+   * CryptoJS解密
+   */
+  getDAes(data) { //解密
+    let key = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'; //密钥
+    let iv = '1234567812345678';
+    let decryptedStr = getDAesString(data, key, iv);
+    return decryptedStr;
+  },
+  /**
+   * 输出当前日期和指定日期的相隔时间
+   * @param {*} time
+   */
+  getOffsetDays(time) {
+    let offsetTime = Math.abs(Date.now() - time);
+    let days = Math.floor(offsetTime / (3600 * 24 * 1e3));
+    if (days < 1) {
+      if (Math.floor(offsetTime / (3600 * 1 * 1e3)) < 1) {
+        return Math.floor((offsetTime / (3600 * 1e3)) * 60) < 1 ? '刚刚' : `${Math.floor((offsetTime / (3600 * 1e3))*60)}分钟前`
+      } else {
+        return `${Math.floor(offsetTime / (3600 * 1 * 1e3))}小时前`
+      }
+    } else if (days < 30) {
+      return `${days}日前`
+    } else if (days > 30) {
+      return `${parseInt(days / 30)}月前`
+    } else if (days > 365) {
+      return `${parseInt(days / 365)}年前`
+    }
+  }
 };
 export default {
   install(Vue) {

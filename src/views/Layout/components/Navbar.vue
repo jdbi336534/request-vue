@@ -7,14 +7,27 @@
                :isActive="sidebar.opened"></hamburger>
     <breadcrumb class="breadcrumb-container"></breadcrumb>
     <div class="right-menu">
-
+      <!-- 全屏显示 -->
       <screenfull class="screenfull right-menu-item"></screenfull>
+      <!-- 使用文档 -->
+      <el-tooltip class="right-menu-item doc"
+                  effect="dark"
+                  content="使用文档"
+                  placement="bottom">
+        <div class="right-menu-item doc">
+          <i class="fa fa-question-circle-o"
+             aria-hidden="true"></i>
+        </div>
+      </el-tooltip>
 
-      <el-dropdown class="avatar-container right-menu-item"
-                   trigger="click">
+      <!-- 系统消息 -->
+      <bell class="right-menu-item" />
+      <!-- 用户下拉框 -->
+      <el-dropdown class="avatar-container right-menu-item">
         <div class="avatar-wrapper">
           王晓文
-          <i class="el-icon-caret-bottom"></i>
+          <i class="el-icon-arrow-down el-icon--right"></i>
+          <!-- <i class="el-icon-caret-bottom"></i> -->
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
@@ -40,12 +53,14 @@
 import { mapGetters } from 'vuex'
 import Hamburger from '@/components/Hamburger'
 import Breadcrumb from '@/components/Breadcrumb'
+import Bell from '@/components/Bell'
 import Screenfull from '@/components/Screenfull'
 export default {
   components: {
     Hamburger,
     Breadcrumb,
     Screenfull,
+    Bell
   },
   name: '',
   data() {
@@ -67,36 +82,45 @@ export default {
 .navbar {
   height: 50px;
   line-height: 50px;
-  border-radius: 0px !important;
   .hamburger-container {
-    line-height: 58px;
     height: 50px;
     float: left;
-    padding: 0 16px;
     display: flex;
     vertical-align: middle;
     align-items: center;
-    &:hover {
-      background: rgb(230, 247, 255);
-    }
   }
   .breadcrumb-container {
     float: left;
   }
   .right-menu {
-    float: right;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
     height: 100%;
+    padding-right:10px;
     &:focus {
       outline: none;
     }
     .right-menu-item {
-      display: inline-block;
-      margin: 0 8px;
+      padding: 0 12px;
+      cursor: pointer;
+      color: rgb(96, 98, 102);
+    }
+    .doc {
+      font-size: 18px;
+      &:hover {
+        background: rgb(230, 247, 255);
+      }
+    }
+    .avatar-container {
+      &:hover {
+        background: rgb(230, 247, 255);
+      }
     }
     .screenfull {
       height: 20px;
       line-height: 20px;
-      vertical-align: middle;
     }
   }
 }
