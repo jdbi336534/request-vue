@@ -51,30 +51,34 @@ instance.interceptors.response.use(
   }
 );
 // 判断后端返回的code
-function checkStatus(response) {
-  if (response.code) {
-    let {
-      code,
-      data,
-      msg
-    } = response;
-    if ((code >= 200 && code <= 300) || code === 304) {
-      if (data) {
-        //  存在data
-        return data;
+function checkStatus(response, checkState) {
+  if (checkState) {
+    if (response.code) {
+      let {
+        code,
+        data,
+        msg
+      } = response;
+      if ((code >= 200 && code <= 300) || code === 304) {
+        if (data) {
+          //  存在data
+          return data;
+        }
+        //  不存在data
+        return false;
       }
-      //  不存在data
-      return false;
+      const error = new Error(msg);
+      error.status = code;
+      throw error;
+    } else {
+      throw new Error('发送请求成功，但是没有返回数据！');
     }
-    const error = new Error(msg);
-    error.status = code;
-    throw error;
   } else {
-    throw new Error('发送请求成功，但是没有返回数据！');
+    return response;
   }
 }
 
-export default function request(method, url, data, options) {
+export default function request(method, url, data, options, checkState = true) {
   const defaultOptions = {
     credentials: 'include'
   };
@@ -95,7 +99,9 @@ export default function request(method, url, data, options) {
       data,
       ...newOptions
     })
-    .then(checkStatus)
+    .then((response) =>
+      checkStatus(response, checkState)
+    )
     .catch(err => {
       if (err.status === 401) {
         // code为 401说明身份验证错误（返回登录页面，并且删除token,session中的token）

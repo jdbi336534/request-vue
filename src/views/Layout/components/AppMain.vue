@@ -1,9 +1,12 @@
 <!-- appmain -->
 <template>
-    <section class="app-main" style="min-height: calc(100% - 50px);">
-        <transition name="fade" mode="out-in">
-            <router-view></router-view>
-        </transition>
+    <section class="app-main">
+        <div class="app-main-wrap">
+            <transition name="fade"
+                        mode="out-in">
+                <router-view></router-view>
+            </transition>
+        </div>
     </section>
 </template>
 <script>
@@ -14,8 +17,8 @@ export default {
         return {};
     },
     computed: {},
-    created() {},
-    mounted() {},
+    created() { },
+    mounted() { },
     methods: {}
 };
 </script>

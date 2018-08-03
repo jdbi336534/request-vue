@@ -1,22 +1,22 @@
 <!-- Layout -->
 <template>
     <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
-        <sidebar class="sidebar-container"></sidebar>
+        <side-bar class="sidebar-container"></side-bar>
         <div class="main-container">
-            <navbar />
+            <nav-bar />
             <app-main />
         </div>
     </div>
 </template>
 <script>
 import AppMain from '@/views/layout/components/AppMain'
-import Navbar from '@/views/layout/components/Navbar'
-import Sidebar from '@/views/layout/components/Sidebar'
+import NavBar from '@/views/layout/components/Navbar'
+import SideBar from '@/views/layout/components/Sidebar'
 export default {
   components: {
     AppMain,
-    Navbar,
-    Sidebar
+    NavBar,
+    SideBar
   },
   name: 'layout',
   data() {

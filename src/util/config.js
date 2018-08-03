@@ -1,6 +1,6 @@
 import qs from 'qs';
  let axiosConfig = {
-  baseURL: process.env.NODE_ENV === 'development' ? '/api' : '/',
+  baseURL: process.env.NODE_ENV === 'development' ? '/api' : '/api',
   // 请求后的数据处理
   transformResponse: [function (data) {
     return data

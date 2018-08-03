@@ -35,6 +35,9 @@ module.exports = {
     'space-before-function-paren': 0,
     'new-cap': [2, {'newIsCap': false, 'capIsNew': false}],
     "no-tabs": "off",
+    'camelcase': [0, {
+      'properties': 'always'
+    }],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }

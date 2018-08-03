@@ -1,6 +1,27 @@
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
+const getAesString = function (data, k, i) { //加密
+  var key = CryptoJS.enc.Utf8.parse(k);
+  var iv = CryptoJS.enc.Utf8.parse(i);
+  var encrypted = CryptoJS.AES.encrypt(data, key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  });
+  return encrypted.toString(); //返回的是base64格式的密文
+}
+
+const getDAesString = function (encrypted, k, i) { //解密
+  var key = CryptoJS.enc.Utf8.parse(k);
+  var iv = CryptoJS.enc.Utf8.parse(i);
+  var decrypted = CryptoJS.AES.decrypt(encrypted, key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  });
+  return decrypted.toString(CryptoJS.enc.Utf8);
+}
 const utils = {
   /**
    * 格式化时间
@@ -95,9 +116,13 @@ const utils = {
     if (!key || typeof key !== 'string') {
       return false;
     }
-    let data = window.sessionStorage.getItem(key);
-    data = JSON.parse(data);
-    return data;
+    try {
+      let data = window.sessionStorage.getItem(key);
+      data = JSON.parse(data);
+      return data;
+    } catch (error) {
+      return false;
+    }
   },
   /**
    * 删除sessionStorage
@@ -110,18 +135,18 @@ const utils = {
    * CryptoJS加密
    */
   getAES(data) { //加密
-    let key = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'; //密钥
-    let iv = '1234567812345678';
+    let key = 'ABCDEAAAAAAAAAAAAAAAAAAAAAAAAAAA'; //密钥
+    let iv = '9527567812345678';
     let encrypted = getAesString(data, key, iv); //密文
     let encrypted1 = CryptoJS.enc.Utf8.parse(encrypted);
-    return encrypted1;
+    return encrypted;
   },
   /**
    * CryptoJS解密
    */
   getDAes(data) { //解密
-    let key = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'; //密钥
-    let iv = '1234567812345678';
+    let key = 'ABCDEAAAAAAAAAAAAAAAAAAAAAAAAAAA'; //密钥
+    let iv = '9527567812345678';
     let decryptedStr = getDAesString(data, key, iv);
     return decryptedStr;
   },
@@ -145,10 +170,25 @@ const utils = {
     } else if (days > 365) {
       return `${parseInt(days / 365)}年前`
     }
+  },
+  setUserInfo(value) {
+    let cryptUserInfo = this.getAES(value);
+    this.saveStorage('userInfo', cryptUserInfo);
+  },
+  getUserInfo() {
+    let userInfo = this.getStorage('userInfo');
+    try {
+      let DecryptUserInfo = this.getDAes(userInfo);
+      return DecryptUserInfo;
+    } catch (error) {
+      return false;
+    }
+  },
+  checkIsLogin() {
+    if (this.getUserInfo()) {
+      return true;
+    }
+    return false;
   }
 };
-export default {
-  install(Vue) {
-    Vue.prototype.$utils = utils;
-  }
-};
+export default utils;

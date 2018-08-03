@@ -1,79 +1,108 @@
 <!-- 登录页面 -->
 <template>
-    <div class="login">
-        <div class="top"></div>
-        <div class="login-box">
-            <div class="left">
-                <img src="../../assets/login/111.png"
-                     alt="">
-            </div>
-            <div class="right">
-                <div class="form">
-                    <h1 class="title">数据统一调度平台 </h1>
-                    <el-alert style="width:380px;margin:0 auto;"
-                              v-if="msg!=''"
-                              :title="msg"
-                              type="error"
-                              show-icon
-                              :closable="false">
-                    </el-alert>
-                    <div class="form_item">
-                        <label>
-                            <i class="user-icon"></i>
-                            <input class="username"
-                                   type="text"
-                                   placeholder="请输入用户名"
-                                   v-model="username"></label>
-                    </div>
-                    <div class="form_item">
-                        <label>
-                            <i class="password-icon"></i>
-                            <input type="password"
-                                   placeholder="请输入密码"
-                                   v-model="password"></label>
-                    </div>
-                    <div class="form_item">
-                        <button type="submit"
-                                :disabled="loading"
-                                :class="{'is-loading':loading}"
-                                @click="handleSubmit">
-                            <i class="fa fa-spinner fa-pulse fa-fw"
-                               v-show="loading"></i>
-                            <span>登</span>
-                            <span>录</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+  <div class="login">
+    <div class="top"></div>
+    <div class="login-box">
+      <div class="left">
+        <img src="../../assets/login/111.png"
+             alt="">
+      </div>
+      <div class="right">
+        <div class="form">
+          <h1 class="title">数据统一调度平台 </h1>
+          <el-alert style="width:380px;margin:0 auto;"
+                    v-if="msg!=''"
+                    :title="msg"
+                    type="error"
+                    show-icon
+                    :closable="false">
+          </el-alert>
+          <div class="form_item">
+            <label>
+              <i class="user-icon"></i>
+              <input class="username"
+                     type="text"
+                     placeholder="请输入用户名"
+                     v-model="userName"></label>
+          </div>
+          <div class="form_item">
+            <label>
+              <i class="password-icon"></i>
+              <input type="password"
+                     placeholder="请输入密码"
+                     v-model="password"></label>
+          </div>
+          <div class="form_item">
+            <button type="submit"
+                    :disabled="loading"
+                    :class="{'is-loading':loading}"
+                    @click="handleSubmit">
+              <i class="fa fa-spinner fa-pulse fa-fw"
+                 v-show="loading"></i>
+              <span>登</span>
+              <span>录</span>
+            </button>
+          </div>
         </div>
-        <div class="bottom"></div>
+      </div>
     </div>
+    <div class="bottom"></div>
+  </div>
 </template>
 <script>
-import { login } from '@/service/common.js';
+import { login } from '@/service/login';
+import util from '@/util';
 export default {
-    components: {},
-    name: '',
-    data() {
-        return {
-            msg: '',
-            username: '',
-            password: '',
-            loading: false
-        };
-    },
-    computed: {},
-    created() { },
-    mounted() { },
-    methods: {
-        async handleSubmit() {
-            let res = await login(this.username, this.password);
-            if (res) {
-                console.log(res);
-            }
-            // this.loading = !this.loading;
+  components: {},
+  name: '',
+  data() {
+    return {
+      msg: '',
+      userName: '',
+      password: '',
+      loading: false
+    };
+  },
+  computed: {},
+  created() { },
+  mounted() { },
+  methods: {
+    async handleSubmit() {
+      let userName = this.userName;
+      let password = this.password;
+      if (!userName) {
+        this.tipError('用户名不能为空！');
+        return false;
+      }
+      if (!password) {
+        this.tipError('密码不能为空！');
+        return false;
+      }
+      this.loading = true;
+      let res = await login(this.userName, this.password);
+      this.loading = false;
+      if (res) {
+        if (res.code === 200) {
+          util.setUserInfo(JSON.stringify(res.data));
+          this.$router.push({
+            path: 'dashboard'
+          })
+        } else {
+          this.tipError(res.msg || '服务器发生错误！请稍后重试');
         }
+      }
+    },
+    tipError(msg) {
+      if (msg.length > 50) {
+        this.msg = msg.substring(0, 50);
+      } else {
+        this.msg = msg;
+      }
+      setTimeout(() => {
+        this.msg = '';
+      }, 4000);
     }
+  }
 };
 </script>
 <style lang='scss' scoped>

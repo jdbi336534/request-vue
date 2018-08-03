@@ -23,25 +23,27 @@
       <!-- 系统消息 -->
       <bell class="right-menu-item" />
       <!-- 用户下拉框 -->
-      <el-dropdown class="avatar-container right-menu-item">
+      <el-dropdown class="avatar-container right-menu-item"
+                   @command="handleCommand">
         <div class="avatar-wrapper">
-          王晓文
+          {{userInfo.realName}}
           <i class="el-icon-arrow-down el-icon--right"></i>
           <!-- <i class="el-icon-caret-bottom"></i> -->
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
-            <el-dropdown-item>
+            <el-dropdown-item command="first">
               首页
             </el-dropdown-item>
           </router-link>
           <a target='_blank'
              href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>
+            <el-dropdown-item command="second">
               项目地址
             </el-dropdown-item>
           </a>
-          <el-dropdown-item divided>
+          <el-dropdown-item command="logout"
+                            divided>
             <span style="display:block;">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -55,6 +57,7 @@ import Hamburger from '@/components/Hamburger'
 import Breadcrumb from '@/components/Breadcrumb'
 import Bell from '@/components/Bell'
 import Screenfull from '@/components/Screenfull'
+import util from '@/util';
 export default {
   components: {
     Hamburger,
@@ -62,18 +65,35 @@ export default {
     Screenfull,
     Bell
   },
-  name: '',
+  name: 'Navbar',
   data() {
-    return {}
+    return {
+      userInfo: {
+        realName: ''
+      }
+    }
   },
   computed: {
     ...mapGetters(['sidebar', 'name', 'avatar'])
   },
-  created() { },
+  created() {
+    let info = util.getUserInfo();
+    if (info) {
+      this.userInfo = JSON.parse(info);
+    }
+  },
   mounted() { },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('toggleSideBar')
+    },
+    handleCommand(command) {
+      if (command === 'logout') {
+        util.removeStorage('userInfo');
+        this.$router.push({
+          path: '/login'
+        });
+      }
     }
   }
 }
@@ -98,7 +118,7 @@ export default {
     justify-content: flex-end;
     align-items: center;
     height: 100%;
-    padding-right:10px;
+    padding-right: 10px;
     &:focus {
       outline: none;
     }
