@@ -1,23 +1,29 @@
 <template>
+    <!-- 存在子路由并且hidden=false -->
     <div v-if="!item.hidden&&item.children"
          class="menu-wrapper">
-
-        <router-link v-if="hasOneShowingChild(item.children) && !onlyOneChild.children&&!item.alwaysShow"
+        <router-link v-if="hasOneShowingChild(item.children) && !onlyOneChild.children && !item.alwaysShow"
                      :to="resolvePath(onlyOneChild.path)">
             <el-menu-item :index="resolvePath(onlyOneChild.path)"
                           :class="{'submenu-title-noDropdown':!isNest}">
-                 <i v-if="onlyOneChild.meta&&onlyOneChild.meta.icon" class="fa" :class="onlyOneChild.meta.icon" aria-hidden="true"></i>
+                <i v-if="onlyOneChild.meta&&onlyOneChild.meta.icon"
+                   class="fa"
+                   :class="onlyOneChild.meta.icon"
+                   aria-hidden="true"></i>
                 <span v-if="onlyOneChild.meta&&onlyOneChild.meta.title"
-                      slot="title">{{onlyOneChild.meta.title}}</span>
+                      slot="title">{{onlyOneChild.meta.title}}123</span>
             </el-menu-item>
         </router-link>
 
         <el-submenu v-else
                     :index="item.name||item.path">
             <template slot="title">
-                <i v-if="item.meta&&item.meta.icon" class="fa" :class="item.meta.icon" aria-hidden="true"></i>
+                <i v-if="item.meta&&item.meta.icon"
+                   class="fa"
+                   :class="item.meta.icon"
+                   aria-hidden="true"></i>
                 <span v-if="item.meta&&item.meta.title"
-                      slot="title">{{item.meta.title}}</span>
+                      slot="title">{{item.meta.title}}456</span>
             </template>
 
             <template v-for="child in item.children"
@@ -33,9 +39,12 @@
                              :to="resolvePath(child.path)"
                              :key="child.name">
                     <el-menu-item :index="resolvePath(child.path)">
-                        <i v-if="child.meta&&child.meta.icon" class="fa" :class="child.meta.icon" aria-hidden="true"></i>
+                        <i v-if="child.meta&&child.meta.icon"
+                           class="fa"
+                           :class="child.meta.icon"
+                           aria-hidden="true"></i>
                         <span v-if="child.meta&&child.meta.title"
-                              slot="title">{{child.meta.title}}</span>
+                              slot="title">{{child.meta.title}}789</span>
                     </el-menu-item>
                 </router-link>
             </template>

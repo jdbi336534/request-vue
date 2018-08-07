@@ -1,0 +1,22 @@
+.operate-btn {
+    color: #00a9fc;
+    display: inline-block;
+    font-size: 20px;
+    vertical-align: middle;
+    padding: 2px;
+    background-color: #e9f2fb;
+    border-color: transparent;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1);
+    transition-property: background, border, box-shadow, outline, opacity,
+      -webkit-box-shadow;
+    &:hover {
+      color: #006af1;
+      background-color: #d3e5f7;
+    }
+  }
+  .operate-btn + .operate-btn {
+    margin-left: 3px;
+  }

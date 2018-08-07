@@ -1,12 +1,10 @@
 <!-- appmain -->
 <template>
     <section class="app-main">
-        <div class="app-main-wrap">
-            <transition name="fade"
-                        mode="out-in">
-                <router-view></router-view>
-            </transition>
-        </div>
+        <transition name="fade"
+                    mode="out-in">
+            <router-view></router-view>
+        </transition>
     </section>
 </template>
 <script>

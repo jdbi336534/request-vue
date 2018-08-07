@@ -61,6 +61,15 @@ export const constantRouterMap = [{
         }
       },
       {
+        path: 'addusers',
+        name: 'dcp-addusers',
+        component: () => import('@/views/system/users/addUser'),
+        hidden: true,
+        meta: {
+          title: '新增用户'
+        }
+      },
+      {
         path: 'testtwo',
         name: 'dcp-testtwo',
         component: () => import('@/views/testpage/test1'),
