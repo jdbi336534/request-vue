@@ -65,7 +65,8 @@ function checkStatus(response, checkState) {
           return data;
         }
         //  不存在data
-        return false;
+        return data||[];
+        // return false;
       }
       const error = new Error(msg);
       error.status = code;

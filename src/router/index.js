@@ -1,17 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import HelloWorld from '@/components/HelloWorld';
-// import login from '@/views/login';
-// import err404 from '@/views/errorPage/404';
-// import err403 from '@/views/errorPage/403';
-// import err500 from '@/views/errorPage/500';
 import Layout from '@/views/Layout/Layout';
-// import dashBoard from '@/views/dashboard/index';
-// import testonea from '@/views/testpage/test1';
-// import testtwoa from '@/views/testpage/test2';
-// import testthreea from '@/views/testpage/test3';
-// const _import = require('./_import_' + process.env.NODE_ENV)
-// console.log(process.env.NODE_ENV)
+// import BlackRoute from '@/components/BlackRoute';
+
 Vue.use(Router);
 export const constantRouterMap = [{
     path: '/login',
@@ -52,21 +43,31 @@ export const constantRouterMap = [{
       title: '系统管理平台',
       icon: 'fa-assistive-listening-systems'
     },
-    children: [{
+    children: [
+      {
         path: 'users',
         name: 'dcp-users',
         component: () => import('@/views/system/users'),
         meta: {
-          title: '用户管理'
+          title: '用户管理',
         }
       },
       {
-        path: 'addusers',
-        name: 'dcp-addusers',
-        component: () => import('@/views/system/users/addUser'),
+        path: 'createUsers',
+        name: 'dcp-users-create',
+        component: () => import('@/views/system/users/opUser'),
         hidden: true,
         meta: {
           title: '新增用户'
+        }
+      },
+      {
+        path: 'modifyUsers',
+        name: 'dcp-users-modify',
+        component: () => import('@/views/system/users/opUser'),
+        hidden: true,
+        meta: {
+          title: '编辑用户'
         }
       },
       {

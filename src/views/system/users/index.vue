@@ -8,7 +8,7 @@
                        type="primary"
                        icon="fa fa-user-plus"
                        plain
-                       @click="$router.push({name:'dcp-addusers'})"> 添加用户</el-button>
+                       @click="$router.push({name:'dcp-users-create', query: {op:'create'}})"> 添加用户</el-button>
         </div>
         <div class="usertable">
             <el-table :data="tableData"
@@ -24,7 +24,7 @@
                                  label="用户名">
                 </el-table-column>
                 <el-table-column property="roleName"
-                                 label="职位">
+                                 label="角色">
                 </el-table-column>
                 <el-table-column property="email"
                                  label="邮箱"
@@ -46,7 +46,7 @@
                 </el-table-column>
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <router-link :to="{ name: 'dcp-addusers', params: { userID: scope.row.id ,op:'edit'}}"
+                        <router-link :to="{ name: 'dcp-users-modify', query: { id: scope.row.id ,op:'modify'}, params: scope.row}"
                                      class="operate-btn"
                                      title="编辑用户">
                             <i class="el-icon-edit"></i>

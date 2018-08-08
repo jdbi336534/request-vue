@@ -39,6 +39,11 @@ export default {
 
     }
   },
+  watch: {
+    '$route'(to, from) {
+      // console.log(to)
+    }
+  },
   computed: {
     ...mapGetters(['permission_routers', 'sidebar']),
     isCollapse() {
@@ -47,7 +52,11 @@ export default {
   },
   created() { },
   mounted() { },
-  methods: {}
+  methods: {
+    getOpenedNamesByActiveName (name) {
+      return this.$route.matched.map(item => item.name).filter(item => item !== name)
+    }
+  }
 }
 </script>
 <style lang='scss' scoped>

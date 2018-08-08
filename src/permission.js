@@ -15,7 +15,6 @@ const hasPermission = () => {
 const whiteList = ['/login'];
 
 router.beforeEach((to, from, next) => {
-  console.log(util.checkIsLogin());
   NProgress.start(); // start progress bar
   let flag = false;
   if (util.checkIsLogin()) {
@@ -59,4 +58,5 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(() => {
   NProgress.done();
+  // window.scrollTo(0, 0);
 })
