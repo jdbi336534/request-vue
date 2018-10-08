@@ -19,6 +19,11 @@ const modifyUserInfo = userInfo => request('POST', `/user/v1.0/modifyUserInfo`, 
 const getUserInfoById = id => request('GET', `/user/v1.0/getUserInfo/${id}`);
 // 获取部门列表
 const getListOfDept = obj => request('POST', `/department/v1.0/listDepartmentInfo`, obj);
+
+// 新接口
+
+// 获得当前登录用户信息
+const getCurrentUserInfo = () => request('GET', `/users/current`);
 export {
   getUserList,
   getDepartment,
@@ -26,5 +31,6 @@ export {
   saveUserInfo,
   modifyUserInfo,
   getUserInfoById,
-  getListOfDept
+  getListOfDept,
+  getCurrentUserInfo
 };

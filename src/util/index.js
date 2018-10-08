@@ -171,12 +171,12 @@ const utils = {
       return `${parseInt(days / 365)}年前`
     }
   },
-  setUserInfo(value) {
+  setInfo(value, key = 'userInfo') {
     let cryptUserInfo = this.getAES(value);
-    this.saveStorage('userInfo', cryptUserInfo);
+    this.saveStorage(key, cryptUserInfo);
   },
-  getUserInfo() {
-    let userInfo = this.getStorage('userInfo');
+  getInfo(key = 'userInfo') {
+    let userInfo = this.getStorage(key);
     try {
       let DecryptUserInfo = this.getDAes(userInfo);
       return DecryptUserInfo;
@@ -185,7 +185,7 @@ const utils = {
     }
   },
   checkIsLogin() {
-    if (this.getUserInfo()) {
+    if (this.getInfo('access_token')) {
       return true;
     }
     return false;

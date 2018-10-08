@@ -1,5 +1,7 @@
 import axios from 'axios';
+import router from '@/router';
 import axiosConfig from './config';
+import util from '@/util';
 import {
   Message
 } from 'element-ui';
@@ -25,7 +27,7 @@ const codeMessage = {
 // Set config defaults when creating the instance
 const instance = axios.create(axiosConfig);
 // Alter defaults after instance has been created
-instance.defaults.headers.common['Authorization'] = 'AUTH_TOKEN';
+instance.defaults.headers.common['access_token'] = util.getInfo('access_token');
 
 // 添加请求拦截器
 instance.interceptors.request.use(
@@ -47,6 +49,13 @@ instance.interceptors.response.use(
     // 浏览器级别code错误码处理
     let response = error.response;
     const errortext = codeMessage[response.status] || response.statusText;
+    console.log(router.currentRoute.path)
+    // if (response.status === 401) {
+      router.replace({
+        path: '/login'
+      })
+      console.log(router.currentRoute.path)
+    // }
     throw new Error(errortext);
   }
 );
@@ -104,9 +113,6 @@ export default function request(method, url, data, options, checkState = true) {
       checkStatus(response, checkState)
     )
     .catch(err => {
-      if (err.status === 401) {
-        // code为 401说明身份验证错误（返回登录页面，并且删除token,session中的token）
-      }
       Message.error(err.message);
       return false;
     });

@@ -1,11 +1,8 @@
 import request from '@/util/request';
-// import qs from 'qs';
+import qs from 'qs';
 
-const login = async (userName, password) => {
-  return request('post', '/sys/v1.0/login', {
-    userName,
-    password
-  }, {}, false);
+const login = async (username, password) => {
+  return request('post', `/login?${qs.stringify({username, password})}`, {}, {}, false);
 };
 
 export {

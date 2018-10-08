@@ -12,6 +12,7 @@
         </div>
         <div class="usertable">
             <el-table :data="tableData"
+                      v-loading="loading"
                       style="width: 100%">
                 <el-table-column property="id"
                                  label="ID"
@@ -80,6 +81,7 @@ export default {
     name: '',
     data() {
         return {
+            loading: false,
             pageNum: 1,
             pageSize: 20,
             total: 0,
@@ -94,15 +96,19 @@ export default {
     methods: {
         handlePageChange(page) {
             this.pageNum = page;
+            this.userList();
         },
         handleSizeChange(size) {
             this.pageSize = size;
+            this.userList();
         },
         formatDate(row) {
             return util.formatDate(row.addDate, 'YYYY-MM-DD');
         },
         async userList() {
+            this.loading = true;
             let res = await getUserList(this.pageNum, this.pageSize);
+            this.loading = false;
             if (res) {
                 this.tableData = res.list;
                 this.total = res.total;
@@ -120,7 +126,8 @@ export default {
     margin-bottom: 10px;
   }
   .pagination {
-    margin: 20px 0 20px;
+    overflow: hidden;
+    margin: 20px 0 0;
   }
 }
 </style>

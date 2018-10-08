@@ -40,7 +40,7 @@ export const constantRouterMap = [{
     component: Layout,
     redirect: '/system/users',
     meta: {
-      title: '系统管理平台',
+      title: '系统管理',
       icon: 'fa-assistive-listening-systems'
     },
     children: [
@@ -75,32 +75,63 @@ export const constantRouterMap = [{
         name: 'dcp-testtwo',
         component: () => import('@/views/testpage/test1'),
         meta: {
-          title: '角色管理'
+          title: '机构管理'
+        }
+      },
+      // {
+      //   path: 'testthree',
+      //   name: 'dcp-testthree',
+      //   component: () => import('@/views/testpage/test1'),
+      //   meta: {
+      //     title: '部门管理'
+      //   }
+      // },
+      // {
+      //   path: 'testfour',
+      //   name: 'dcp-testfour',
+      //   component: () => import('@/views/testpage/test1'),
+      //   meta: {
+      //     title: '注册中心'
+      //   }
+      // },
+      // {
+      //   path: 'testfive',
+      //   name: 'dcp-testfive',
+      //   component: () => import('@/views/testpage/test1'),
+      //   meta: {
+      //     title: '配置中心'
+      //   }
+      // }
+    ]
+  },
+  {
+    path: '/background',
+    name: 'background',
+    component: Layout,
+    redirect: '/background/log',
+    meta: {
+      title: '后台管理',
+      icon: 'fa-assistive-listening-systems'
+    },
+    children: [
+      {
+        path: 'log',
+        name: 'background-log',
+        component: () => import('@/views/background/log'),
+        meta: {
+          title: '日志查询'
         }
       },
       {
-        path: 'testthree',
-        name: 'dcp-testthree',
-        component: () => import('@/views/testpage/test1'),
+        path: 'resource',
+        name: 'background-resource',
+        // component: () => import('@/views/background/resource'),
         meta: {
-          title: '菜单管理'
-        }
-      },
-      {
-        path: 'testfour',
-        name: 'dcp-testfour',
-        component: () => import('@/views/testpage/test1'),
-        meta: {
-          title: '注册中心'
-        }
-      },
-      {
-        path: 'testfive',
-        name: 'dcp-testfive',
-        component: () => import('@/views/testpage/test1'),
-        meta: {
-          title: '配置中心'
-        }
+          title: '资源管理'
+        },
+        children: [
+
+        ]
       }
     ]
   }

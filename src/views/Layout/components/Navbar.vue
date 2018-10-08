@@ -26,7 +26,7 @@
       <el-dropdown class="avatar-container right-menu-item"
                    @command="handleCommand">
         <div class="avatar-wrapper">
-          {{userInfo.realName}}
+          {{userInfo.nickname}}
           <i class="el-icon-arrow-down el-icon--right"></i>
           <!-- <i class="el-icon-caret-bottom"></i> -->
         </div>
@@ -57,7 +57,8 @@ import Hamburger from '@/components/Hamburger'
 import Breadcrumb from '@/components/Breadcrumb'
 import Bell from '@/components/Bell'
 import Screenfull from '@/components/Screenfull'
-import util from '@/util';
+import util from '@/util'
+import { getCurrentUserInfo } from '@/service/system/users'
 export default {
   components: {
     Hamburger,
@@ -77,10 +78,7 @@ export default {
     ...mapGetters(['sidebar', 'name', 'avatar'])
   },
   created() {
-    let info = util.getUserInfo();
-    if (info) {
-      this.userInfo = JSON.parse(info);
-    }
+    this.getUserInfo();
   },
   mounted() { },
   methods: {
@@ -89,10 +87,20 @@ export default {
     },
     handleCommand(command) {
       if (command === 'logout') {
-        util.removeStorage('userInfo');
+        util.removeStorage('access_token');
         this.$router.push({
           path: '/login'
         });
+      }
+    },
+    async getUserInfo() {
+      let res = await getCurrentUserInfo();
+      if (res) {
+        util.setInfo(JSON.stringify(res));
+        let info = util.getInfo();
+        if (info) {
+          this.userInfo = JSON.parse(info);
+        }
       }
     }
   }

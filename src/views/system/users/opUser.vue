@@ -352,6 +352,7 @@ export default {
             }
         },
         changessjg(val) {
+            this.form.departmentId = '';
             this.Department(val);
         },
         async Department(val) {

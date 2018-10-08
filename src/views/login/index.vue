@@ -82,8 +82,8 @@ export default {
       let res = await login(this.userName, this.password);
       this.loading = false;
       if (res) {
-        if (res.code === 200) {
-          util.setUserInfo(JSON.stringify(res.data));
+        if (res.token) {
+          util.setInfo(res.token, 'access_token');
           this.$router.push({
             path: 'dashboard'
           })
